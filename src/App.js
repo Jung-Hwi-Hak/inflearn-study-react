@@ -1,25 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+/* BrowserRouter 를 이용해 Route, Routes 을 사용 */
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+
+/* SPA 페이지 이동에 필요 */
+import RouteTest from "./components/RouteTest";
+
+/* 페이지 Route  */
+import Home from "./pages/Home";
+import Edit from "./pages/Edit";
+import Diary from "./pages/Diary";
+import New from "./pages/New";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (<BrowserRouter>
+        <div className="App">
+            <h1>App.js</h1>
+            <Routes>
+                <Route path={'/'} element={<Home/>}/>
+                <Route path={'/diary/:id'} element={<Diary/>}/>
+                <Route path={'/edit'} element={<Edit/>}/>
+                <Route path={'/new'} element={<New/>}/>
+            </Routes>
+        </div>
+        <RouteTest/>
+    </BrowserRouter>);
 }
 
 export default App;
