@@ -2,9 +2,6 @@ import './App.css';
 /* BrowserRouter 를 이용해 Route, Routes 을 사용 */
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
-/* SPA 페이지 이동에 필요 */
-import RouteTest from "./components/RouteTest";
-
 /* 페이지 Route  */
 import Home from "./pages/Home";
 import Edit from "./pages/Edit";
@@ -21,8 +18,8 @@ function App() {
                 <Route path={'/edit'} element={<Edit/>}/>
                 <Route path={'/new'} element={<New/>}/>
             </Routes>
+
         </div>
-        <RouteTest/>
     </BrowserRouter>);
 }
 
