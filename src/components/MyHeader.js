@@ -1,3 +1,5 @@
+import React from "react";
+
 const MyHeader = ({text, left, right}) => {
     return (
         <header>

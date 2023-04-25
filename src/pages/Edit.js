@@ -1,35 +1,39 @@
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useContext, useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import {DiaryStateContext} from "../App";
+import DiaryEditor from "../components/DiaryEditor";
+
 
 const Edit = () => {
-
-    /**
-     * ex) http://localhost:3002/edit?id=10&mode=dark
-     *
-     * useSearchParams 를 이용해 QuringString 값을 꺼내올수 있음.
-     * */
-    const [searchParams, setSearchParams] = useSearchParams();
-    const id = searchParams.get('id');
-    const mode = searchParams.get('mode');
-    const who = searchParams.get("who");
-    console.log("default : ", id, mode);
-    console.log("change : ", who);
-
+    /* state */
+    const [originData, setOriginData] = useState();
     /* useNavigate 를 사용해서 페이지 이동 */
     const navigate = useNavigate();
+    /* uri 에 있는 id param */
+    const {id} = useParams();
+
+    const diaryList = useContext(DiaryStateContext);
+
+    useEffect(()=>{
+        const titleElement = document.getElementsByTagName('title')[0];
+        titleElement.innerHTML = `감정 일기장 - ${id}번 일기 수정`;
+    },[]);
+
+    useEffect(()=>{
+        if(diaryList.length >= 1){
+            const targetDiary = diaryList.find((it) => parseInt(it.id) === parseInt(id));
+
+            if(targetDiary){
+                setOriginData(targetDiary);
+            }else{
+                navigate('/', {replace : true});
+            }
+        }
+    },[id, diaryList, navigate]);
+
     return (
         <div>
-            <h1>Edit</h1>
-            <p>이곳은 수정 페이지 입니다.</p>
-            {/* QuringString 을 바꿔 현재 URI 를 변경할 수 있음. */}
-            {/*<button onClick={()=> setSearchParams({who: "winterlood"})}>QS 바꾸기</button>*/}
-            <button onClick={() => {
-                navigate('/home')
-            }}>HOME 이동
-            </button>
-            <button onClick={() => {
-                navigate(-1)
-            }}>뒤로가기
-            </button>
+            <h2>{originData && <DiaryEditor isEdit={true} originData={originData}/>}</h2>
 
         </div>
     )

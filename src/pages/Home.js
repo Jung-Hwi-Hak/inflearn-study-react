@@ -17,6 +17,11 @@ const Home = () => {
 
     const headerText = `${curDate.getFullYear()}년 ${curDate.getMonth() + 1}월`;
 
+    useEffect(()=>{
+        const titleElement = document.getElementsByTagName('title')[0];
+        titleElement.innerHTML = `감정 일기장`;
+    },[])
+
     /* 날짜 변경에 따라 날짜에 해당하는 리스트만 표출 */
     useEffect(()=>{
         if(diaryList.length >= 1) {
@@ -28,16 +33,15 @@ const Home = () => {
             const lastDay = new Date(
                 curDate.getFullYear(),
                 curDate.getMonth() + 1,
-                0
+                0,
+                23,
+                59,
+                59
             ).getTime();
 
             setDiaryListData(diaryList.filter((it) => firstDay <= it.date && it.date <= lastDay));
         }
     },[diaryList,curDate]);
-
-    useEffect(()=>{
-        console.log(diaryListData);
-    }, [diaryListData])
 
     /* Month + 1 */
     const increaseMonth = () => {
